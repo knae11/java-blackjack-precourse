@@ -2,11 +2,11 @@ package domain.service;
 
 import domain.card.ShuffledCard;
 import domain.common.Answer;
-import domain.common.Status;
-import domain.user.Character;
+import domain.user.BlackJackCharacter;
 import domain.user.Dealer;
 import domain.user.Players;
 import domain.view.InputManager;
+import domain.view.OutputManager;
 import java.util.Scanner;
 
 public class BlackjackService {
@@ -28,7 +28,7 @@ public class BlackjackService {
     }
 
     private void playNextTurn() {
-        if (turnForPlayers()) {
+        if (turnAgain()) {
             return;
         }
         setCaseOfNoWinnerAndLoser();
@@ -39,27 +39,35 @@ public class BlackjackService {
     }
 
 
-    private boolean turnForPlayers() {
-        for (Character player : Players.players()) {
-            if(player.getName().equals(Dealer.NAME)){
-                player.addCard(shuffledCard.getShuffledCard());
-                continue;
-            }
-            String answer = inputManager.getAnswerOfMoreCard();
-            if (answer.equals(Answer.YES.getAnswer())) {
-                player.addCard(shuffledCard.getShuffledCard());
-            }
-            if (checkDie(player)) {
+    private boolean turnAgain() {
+        for (BlackJackCharacter player : Players.players()) {
+            if(turnForPlayers(player)||turnForDealer(player)){
                 return true;
             }
         }
         return false;
     }
 
+    private boolean turnForDealer(BlackJackCharacter player) {
+        if (player.getName().equals(Dealer.NAME)) {
+            player.addCard(shuffledCard.getShuffledCard());
+             return checkDie(player);
+        }
+        return false;
+    }
 
-    private boolean checkDie(Character player) {
+    private boolean turnForPlayers(BlackJackCharacter player) {
+        String answer = inputManager.getAnswerOfMoreCard();
+        if (answer.equals(Answer.YES.getAnswer())) {
+            player.addCard(shuffledCard.getShuffledCard());
+            return checkDie(player);
+        }
+        return false;
+    }
+
+
+    private boolean checkDie(BlackJackCharacter player) {
         if (!player.isGameOver().equals("")) {
-            System.out.println(player.isGameOver());
             return true;
         }
         return false;
@@ -75,45 +83,26 @@ public class BlackjackService {
     }
 
     private void isLoserCase() {
-        for(Character player : Players.players()){
-            if(player.getName().equals(Dealer.NAME)){
-                System.out.println(player.getName() + " - 카드합계 : " + player.getSumOfCards());
+        for (BlackJackCharacter player : Players.players()) {
+            if (player.getName().equals(Dealer.NAME)) {
+                OutputManager.printDealerCase(player);
                 continue;
             }
-            System.out.println(
-                player.getName() + " -  카드 합계 : " + player.getSumOfCards() + ", 결과 : " + player
-                    .getLoserExistCaseReturnMoney());
+            OutputManager.printLoserPlayerCase(player);
         }
 
     }
 
     private void isWinnerCase() {
-        for(Character player : Players.players()){
-            if(player.getName().equals(Dealer.NAME)){
-                System.out.println(player.getName() + " - 카드합계 : " + player.getSumOfCards());
+        for (BlackJackCharacter player : Players.players()) {
+            if (player.getName().equals(Dealer.NAME)) {
+                OutputManager.printDealerCase(player);
                 continue;
             }
-            System.out.println(
-                player.getName() + " -  카드 합계 : " + player.getSumOfCards() + ", 결과 : " + player
-                    .getWinnerExistCaseReturnMoney());
+            OutputManager.printWinnerPlayerCase(player);
         }
     }
-/*
-    private void isPlayerWinner() {
-        System.out.println(dealer.getName() + " - 카드합계 : " + dealer.getSumOfCards());
-        //for ()
 
-    }
-
-    private void isDealerWinner() {
-        System.out.println(dealer.getName() + " - 카드합계 : " + dealer.getSumOfCards());
-        for (Character player : Players.players()) {
-            System.out.println(
-                player.getName() + " -  카드 합계 : " + player.getSumOfCards() + ", 결과 : " + player
-                    .getReturnMoneyWhenWinnerExists());
-        }
-    }
-*/
     private void initHandoutCards() {
         for (int i = 0; i < TWO; i++) {
             setAllPlayersCard();
@@ -121,16 +110,16 @@ public class BlackjackService {
     }
 
     private void setAllPlayersCard() {
-        for (Character player : Players.players()) {
+        for (BlackJackCharacter player : Players.players()) {
             player.addCard(shuffledCard.getShuffledCard());
         }
     }
 
     private void setPlayersAndBetting(String[] players) {
-        Players.addDealer(new Dealer());
         for (String player : players) {
             double betting = inputManager.getPlayerBetting(player);
             Players.addPlayer(player, betting);
         }
+        Players.addDealer(new Dealer());
     }
 }

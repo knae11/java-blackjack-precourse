@@ -3,14 +3,13 @@ package domain.user;
 import domain.card.Card;
 
 import domain.common.Status;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 게임 참여자를 의미하는 객체
  */
-public class Player extends Character {
+public class Player extends BlackJackCharacter {
     private final String name;
     private final double bettingMoney;
     private static final double WINNER_RATE = 1.5;

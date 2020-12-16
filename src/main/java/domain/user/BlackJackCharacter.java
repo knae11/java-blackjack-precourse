@@ -2,11 +2,8 @@ package domain.user;
 
 import domain.card.Card;
 import domain.common.Status;
-import java.util.ArrayList;
-import java.util.List;
 
-public abstract class Character {
-
+public abstract class BlackJackCharacter {
     private static final int BLACKJACK = 21;
     private String gameOver = "";
     public int sumOfCards = 0;
@@ -21,7 +18,7 @@ public abstract class Character {
 
     public void setAsWinner(){
         gameOver = Status.WINNER.getStatus();
-    };
+    }
 
     // TODO 추가 기능 구현
 
