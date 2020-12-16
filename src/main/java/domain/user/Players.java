@@ -27,7 +27,7 @@ public class Players {
     public static void setResultWhenTie() {
         System.out.println(maxScore);
         players.stream().filter(player -> player.getSumOfCards() == maxScore)
-            .forEach(player -> player.setAsWinner());
+            .forEach(BlackJackCharacter::setAsWinner);
     }
 
     public static void addPlayer(String playerInput, double betting) {
@@ -44,6 +44,5 @@ public class Players {
         return players.stream()
             .anyMatch(player -> Objects.equals(player.isGameOver(), Status.WINNER.getStatus()));
     }
-
 
 }

@@ -68,10 +68,7 @@ public class BlackjackService {
 
 
     private boolean checkDie(BlackJackCharacter player) {
-        if (!player.isGameOver().equals("")) {
-            return true;
-        }
-        return false;
+        return !player.isGameOver().equals("");
     }
 
     private void printResult() {
@@ -80,7 +77,6 @@ public class BlackjackService {
             return;
         }
         isLoserCase();
-
     }
 
     private void isLoserCase() {
@@ -91,7 +87,6 @@ public class BlackjackService {
             }
             OutputManager.printLoserPlayerCase(player);
         }
-
     }
 
     private void isWinnerCase() {

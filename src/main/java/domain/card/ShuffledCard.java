@@ -8,10 +8,12 @@ public class ShuffledCard {
 
     private List<Card> randomCards = new ArrayList<>(CardFactory.create());
     private int cardNumber = -1;
-    public ShuffledCard(){
+
+    public ShuffledCard() {
         Collections.shuffle(randomCards);
     }
-    public Card getShuffledCard(){
+
+    public Card getShuffledCard() {
         cardNumber += 1;
         return randomCards.get(cardNumber);
     }

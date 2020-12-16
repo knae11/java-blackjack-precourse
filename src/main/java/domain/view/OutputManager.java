@@ -10,9 +10,7 @@ public class OutputManager {
     private static final String SUM_CARDS = " - 카드합계 : ";
     private static final String RETURN_MONEY = ", 결과금액 : ";
 
-
     private OutputManager() {
-
     }
 
     public static void printAskPlayers() {

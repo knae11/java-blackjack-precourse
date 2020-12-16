@@ -13,10 +13,11 @@ public class Dealer extends BlackJackCharacter {
     public static final String NAME = "DEALER";
     private final List<Card> cards = new ArrayList<>();
 
-    public Dealer() {}
+    public Dealer() {
+    }
 
     public void addCard(Card card) {
-        if(sumOfCards < MIN_NOT_MORE_CARD){
+        if (sumOfCards < MIN_NOT_MORE_CARD) {
             cards.add(card);
             sumOfCards += card.getScoreOfCard();
             Players.setMaxScore(sumOfCards);
@@ -35,7 +36,7 @@ public class Dealer extends BlackJackCharacter {
     }
 
     @Override
-    public double getLoserExistCaseReturnMoney(){
+    public double getLoserExistCaseReturnMoney() {
         return 0;
     }
 

@@ -16,11 +16,9 @@ public abstract class BlackJackCharacter {
 
     public abstract double getLoserExistCaseReturnMoney();
 
-    public void setAsWinner(){
+    public void setAsWinner() {
         gameOver = Status.WINNER.getStatus();
     }
-
-    // TODO 추가 기능 구현
 
     public void checkBlackJack() {
         if (sumOfCards == BLACKJACK) {
@@ -41,7 +39,6 @@ public abstract class BlackJackCharacter {
     public int getSumOfCards() {
         return sumOfCards;
     }
-
 
 }
 

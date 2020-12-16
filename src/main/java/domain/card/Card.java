@@ -17,17 +17,21 @@ public class Card {
 
     // TODO Card 관련 추가 기능 구현
 
-    public int getScoreOfCard(){
+    public int getScoreOfCard() {
         return symbol.getScore();
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Card card = (Card) o;
         return symbol == card.symbol &&
-                type == card.type;
+            type == card.type;
     }
 
     @Override
@@ -38,8 +42,8 @@ public class Card {
     @Override
     public String toString() {
         return "Card{" +
-                "symbol=" + symbol +
-                ", type=" + type +
-                '}';
+            "symbol=" + symbol +
+            ", type=" + type +
+            '}';
     }
 }

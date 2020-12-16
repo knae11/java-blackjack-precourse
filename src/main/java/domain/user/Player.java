@@ -1,7 +1,6 @@
 package domain.user;
 
 import domain.card.Card;
-
 import domain.common.Status;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ public class Player extends BlackJackCharacter {
     private final String name;
     private final double bettingMoney;
     private static final double WINNER_RATE = 1.5;
-    private final List<Card> cards = new ArrayList<>();
+    private List<Card> cards = new ArrayList<>();
 
     public Player(String name, double bettingMoney) {
         this.name = name;
@@ -36,7 +35,7 @@ public class Player extends BlackJackCharacter {
 
     @Override
     public double getWinnerExistCaseReturnMoney() {
-        if(isGameOver().equals(Status.WINNER.getStatus())){
+        if (isGameOver().equals(Status.WINNER.getStatus())) {
             return bettingMoney * WINNER_RATE;
         }
         return 0;
@@ -44,11 +43,10 @@ public class Player extends BlackJackCharacter {
 
     @Override
     public double getLoserExistCaseReturnMoney() {
-        if(isGameOver().equals(Status.LOSER.getStatus())){
+        if (isGameOver().equals(Status.LOSER.getStatus())) {
             return 0;
         }
         return bettingMoney;
     }
-
 
 }

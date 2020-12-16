@@ -3,11 +3,8 @@ package domain.view;
 import domain.common.Answer;
 import domain.common.ErrorMessage;
 import domain.common.ErrorMessageException;
-import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import javafx.scene.chart.ScatterChart;
 
 public class InputManager {
     private static final String NOT_UNDER_ONE = "1이상의 금액을 입력해주세요.";
