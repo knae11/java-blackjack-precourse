@@ -41,7 +41,10 @@ public class BlackjackService {
 
     private boolean turnAgain() {
         for (BlackJackCharacter player : Players.players()) {
-            if(turnForPlayers(player)||turnForDealer(player)){
+            if (player.getName().equals(Dealer.NAME)) {
+                return turnForDealer(player);
+            }
+            if (turnForPlayers(player)) {
                 return true;
             }
         }
@@ -49,11 +52,9 @@ public class BlackjackService {
     }
 
     private boolean turnForDealer(BlackJackCharacter player) {
-        if (player.getName().equals(Dealer.NAME)) {
-            player.addCard(shuffledCard.getShuffledCard());
-             return checkDie(player);
-        }
-        return false;
+        player.addCard(shuffledCard.getShuffledCard());
+        return checkDie(player);
+
     }
 
     private boolean turnForPlayers(BlackJackCharacter player) {
