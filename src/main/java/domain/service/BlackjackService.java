@@ -35,14 +35,22 @@ public class BlackjackService {
     }
 
     private void playNextTurn() {
+        dealer.addCard(shuffledCard.getShuffledCard());
+        checkDieForDealer();
         for (Player player : Players.players()) {
             String answer = inputManager.getAnswerOfMoreCard();
             if(answer.equals(Answer.YES.getAnswer())){
                 player.addCard(shuffledCard.getShuffledCard());
             }
-
             System.out.println(player.getSumOfCards());
             checkDie(player);
+        }
+
+    }
+
+    private void checkDieForDealer() {
+        if(!dealer.isGameOver().equals("")){
+            System.out.println(dealer.isGameOver());
         }
     }
 

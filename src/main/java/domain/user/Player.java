@@ -11,13 +11,13 @@ import java.util.List;
  */
 public class Player {
     private static final int BLACKJACK = 21;
+    public String gameOver = "";
+    public int sumOfCards = 0;
     private static final String WINNER = "WINNER";
     private static final String LOSER = "LOSER";
-    private String gameOver = "";
     private final String name;
     private final double bettingMoney;
     private final List<Card> cards = new ArrayList<>();
-    private int sumOfCards = 0;
 
     public Player(String name, double bettingMoney) {
         this.name = name;
@@ -31,29 +31,29 @@ public class Player {
         checkBlackJack();
     }
 
-    private void checkBlackJack() {
-        if(sumOfCards == BLACKJACK){
-            gameOver = WINNER;
-        }
-    }
-
-    private void checkDie() {
-        if (sumOfCards > BLACKJACK) {
-            gameOver = LOSER;
-        }
-    }
-    public String isGameOver(){
-        return gameOver;
-    }
-
     public String getName() {
         return name;
     }
 
-    public int getSumOfCards(){
-        return sumOfCards;
-    }
-
     // TODO 추가 기능 구현
 
+    public void checkBlackJack() {
+        if (sumOfCards == BLACKJACK) {
+            gameOver = WINNER;
+        }
+    }
+
+    public void checkDie() {
+        if (sumOfCards > BLACKJACK) {
+            gameOver = LOSER;
+        }
+    }
+
+    public String isGameOver() {
+        return gameOver;
+    }
+
+    public int getSumOfCards() {
+        return sumOfCards;
+    }
 }
