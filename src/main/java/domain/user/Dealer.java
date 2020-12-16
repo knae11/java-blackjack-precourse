@@ -15,6 +15,7 @@ public class Dealer  {
     private static final String WINNER = "WINNER";
     private static final String LOSER = "LOSER";
     private static final int MIN_NOT_MORE_CARD = 17;
+    private final String name = "DEALER";
     private final List<Card> cards = new ArrayList<>();
 
     public Dealer() {}
@@ -43,6 +44,11 @@ public class Dealer  {
     public int getSumOfCards(){
         return sumOfCards;
     }
+
+    public String getName() {
+        return name;
+    }
+
 
     // TODO 추가 기능 구현
 

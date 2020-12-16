@@ -35,35 +35,56 @@ public class BlackjackService {
     }
 
     private void playNextTurn() {
+        if(turnForPlayers()){
+            return;
+        }
+        if(turnForDealer()){
+            return;
+        }
+    }
+
+    private boolean turnForDealer() {
         dealer.addCard(shuffledCard.getShuffledCard());
-        checkDieForDealer();
+        if(checkDieForDealer()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean turnForPlayers() {
         for (Player player : Players.players()) {
             String answer = inputManager.getAnswerOfMoreCard();
             if(answer.equals(Answer.YES.getAnswer())){
                 player.addCard(shuffledCard.getShuffledCard());
             }
             System.out.println(player.getSumOfCards());
-            checkDie(player);
+            if(checkDie(player)){
+                return true;
+            };
         }
-
+        return false;
     }
 
-    private void checkDieForDealer() {
+    private boolean checkDieForDealer() {
         if(!dealer.isGameOver().equals("")){
             System.out.println(dealer.isGameOver());
+            return true;
         }
+        return false;
     }
 
-    private void checkDie(Player player) {
+    private boolean checkDie(Player player) {
         if(!player.isGameOver().equals("")){
             System.out.println(player.isGameOver());
+            return true;
         }
+        return false;
     }
-
+    //todo : 베팅금액 표시
     private void printResult() {
-        System.out.println(dealer.getSumOfCards());
+        System.out.println(dealer.getName() + " - 카드합계 : " + dealer.getSumOfCards());
         for (Player player : Players.players()) {
-            System.out.println(player.getSumOfCards());
+            System.out.println(player.getName() + " -  카드 합계 : " + player.getSumOfCards() + ", 결과 : " + player.getReturnMoney());
         }
     }
 

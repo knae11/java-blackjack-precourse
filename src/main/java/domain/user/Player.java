@@ -11,12 +11,14 @@ import java.util.List;
  */
 public class Player {
     private static final int BLACKJACK = 21;
+    public static final double WINNER_RATE = 1.5;
     public String gameOver = "";
     public int sumOfCards = 0;
     private static final String WINNER = "WINNER";
     private static final String LOSER = "LOSER";
     private final String name;
     private final double bettingMoney;
+    private double returnMoney = 0;
     private final List<Card> cards = new ArrayList<>();
 
     public Player(String name, double bettingMoney) {
@@ -39,6 +41,7 @@ public class Player {
 
     public void checkBlackJack() {
         if (sumOfCards == BLACKJACK) {
+            returnMoney = bettingMoney* WINNER_RATE;
             gameOver = WINNER;
         }
     }
@@ -55,5 +58,9 @@ public class Player {
 
     public int getSumOfCards() {
         return sumOfCards;
+    }
+
+    public double getReturnMoney(){
+        return returnMoney;
     }
 }
