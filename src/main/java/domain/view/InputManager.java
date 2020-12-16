@@ -2,15 +2,20 @@ package domain.view;
 
 import domain.common.ErrorMessage;
 import domain.common.ErrorMessageException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Scanner;
+import javafx.scene.chart.ScatterChart;
 
 public class InputManager {
+    private static final String NOT_UNDER_ONE = "1이상의 금액을 입력해주세요.";
     private static final String NO_WHITE_SPACE = "이름에 공백을 허용하지 않습니다.";
-    private final Scanner scanner;
+    private static final String NOT_DOUBLE = "숫자로 입력해 주세요.";
+    private static final int MIN_BETTING = 1;
     private static final String PLAYER_SPLIT_DELIMITER = ",";
     private static final String NO_EMPTY_PLAYER = "플레이어 이름에는 공백을 허용하지 않습니다.";
 
+    private final Scanner scanner;
 
     public InputManager(Scanner scanner) {
         this.scanner = scanner;
@@ -31,7 +36,7 @@ public class InputManager {
     }
 
     private String[] checkPlayersInput(String playersInput) {
-        String[] players = playersInput.split(PLAYER_SPLIT_DELIMITER,-1);
+        String[] players = playersInput.split(PLAYER_SPLIT_DELIMITER, -1);
         for (String player : players) {
             player = player.trim();
             checkEmpty(player);
@@ -42,7 +47,7 @@ public class InputManager {
     }
 
     private void checkWhiteSpace(String player) {
-        if(player.contains(" ")){
+        if (player.contains(" ")) {
             throw new ErrorMessageException(NO_WHITE_SPACE);
         }
     }
@@ -50,6 +55,35 @@ public class InputManager {
     private void checkEmpty(String player) {
         if (player.equals("")) {
             throw new ErrorMessageException(NO_EMPTY_PLAYER);
+        }
+    }
+
+    public double getPlayerBetting(String player) {
+        while (true) {
+            OutputManager.printInputBetting(player);
+            String bettingInput = scanner.nextLine().trim();
+            try {
+                return checkNumber(bettingInput);
+            } catch (ErrorMessageException errorMessageException){
+                ErrorMessage.print(errorMessageException);
+            }
+        }
+    }
+
+    private double checkNumber(String bettingInput) {
+        try {
+            double betting = Double.parseDouble(bettingInput);
+            checkOverOne(betting);
+            return betting;
+        } catch (NumberFormatException n) {
+            throw new ErrorMessageException(NOT_DOUBLE);
+        }
+
+    }
+
+    private void checkOverOne(double betting) {
+        if (betting < MIN_BETTING) {
+            throw new ErrorMessageException(NOT_UNDER_ONE);
         }
     }
 }

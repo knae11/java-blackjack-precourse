@@ -13,6 +13,10 @@ public class BlackjackService {
 
     public void run(){
        String[] players = inputManager.getPlayersInput();
+       for(String player : players){
+           double betting = inputManager.getPlayerBetting(player);
+           System.out.println(betting);
+       }
 
     }
 }
