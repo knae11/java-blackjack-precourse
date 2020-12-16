@@ -5,6 +5,7 @@ import domain.common.ErrorMessage;
 import domain.common.ErrorMessageException;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import javafx.scene.chart.ScatterChart;
 
@@ -28,7 +29,7 @@ public class InputManager {
         while (true) {
             try {
                 OutputManager.printAskPlayers();
-                String playersInput = scanner.nextLine().trim();
+                String playersInput = scanner.nextLine().trim().replace(" ","");
                 String[] players = checkPlayersInput(playersInput);
                 System.out.println(Arrays.toString(players));
                 return players;
@@ -44,7 +45,6 @@ public class InputManager {
             player = player.trim();
             checkEmpty(player);
             checkWhiteSpace(player);
-
         }
         return players;
     }

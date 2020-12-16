@@ -2,6 +2,7 @@ package domain.user;
 
 import domain.card.Card;
 
+import domain.common.Status;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,16 +10,10 @@ import java.util.List;
 /**
  * 게임 참여자를 의미하는 객체
  */
-public class Player {
-    private static final int BLACKJACK = 21;
-    public static final double WINNER_RATE = 1.5;
-    public String gameOver = "";
-    public int sumOfCards = 0;
-    private static final String WINNER = "WINNER";
-    private static final String LOSER = "LOSER";
+public class Player extends Character {
     private final String name;
     private final double bettingMoney;
-    private double returnMoney = 0;
+    private static final double WINNER_RATE = 1.5;
     private final List<Card> cards = new ArrayList<>();
 
     public Player(String name, double bettingMoney) {
@@ -26,6 +21,7 @@ public class Player {
         this.bettingMoney = bettingMoney;
     }
 
+    @Override
     public void addCard(Card card) {
         cards.add(card);
         sumOfCards += card.getScoreOfCard();
@@ -33,34 +29,25 @@ public class Player {
         checkBlackJack();
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
-    // TODO 추가 기능 구현
-
-    public void checkBlackJack() {
-        if (sumOfCards == BLACKJACK) {
-            returnMoney = bettingMoney* WINNER_RATE;
-            gameOver = WINNER;
+    @Override
+    public double getWinnerExistCaseReturnMoney() {
+        if(isGameOver().equals(Status.WINNER.getStatus())){
+            return bettingMoney * WINNER_RATE;
         }
+        return 0;
     }
 
-    public void checkDie() {
-        if (sumOfCards > BLACKJACK) {
-            gameOver = LOSER;
+    @Override
+    public double getLoserExistCaseReturnMoney() {
+        if(isGameOver().equals(Status.LOSER.getStatus())){
+            return 0;
         }
+        return bettingMoney;
     }
 
-    public String isGameOver() {
-        return gameOver;
-    }
-
-    public int getSumOfCards() {
-        return sumOfCards;
-    }
-
-    public double getReturnMoney(){
-        return returnMoney;
-    }
 }

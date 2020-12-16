@@ -2,20 +2,16 @@ package domain.user;
 
 import domain.card.Card;
 
+import domain.common.Status;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 게임 딜러를 의미하는 객체
  */
-public class Dealer  {
-    private static final int BLACKJACK = 21;
-    public String gameOver = "";
-    public int sumOfCards = 0;
-    private static final String WINNER = "WINNER";
-    private static final String LOSER = "LOSER";
+public class Dealer extends Character {
     private static final int MIN_NOT_MORE_CARD = 17;
-    private final String name = "DEALER";
+    public static final String NAME = "DEALER";
     private final List<Card> cards = new ArrayList<>();
 
     public Dealer() {}
@@ -28,28 +24,19 @@ public class Dealer  {
             checkBlackJack();
         }
     }
-    public void checkBlackJack() {
-        if(sumOfCards == BLACKJACK){
-            gameOver = WINNER;
-        }
-    }
-    public void checkDie() {
-        if (sumOfCards > BLACKJACK) {
-            gameOver = LOSER;
-        }
-    }
-    public String isGameOver(){
-        return gameOver;
-    }
-    public int getSumOfCards(){
-        return sumOfCards;
-    }
 
     public String getName() {
-        return name;
+        return NAME;
     }
 
+    @Override
+    public double getWinnerExistCaseReturnMoney() {
+        return 0;
+    }
 
-    // TODO 추가 기능 구현
+    @Override
+    public double getLoserExistCaseReturnMoney(){
+        return 0;
+    }
 
 }
