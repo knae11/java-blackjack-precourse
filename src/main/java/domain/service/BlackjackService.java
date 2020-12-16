@@ -1,5 +1,7 @@
 package domain.service;
 
+import domain.user.Player;
+import domain.user.Players;
 import domain.view.InputManager;
 import java.util.Scanner;
 
@@ -13,10 +15,15 @@ public class BlackjackService {
 
     public void run(){
        String[] players = inputManager.getPlayersInput();
-       for(String player : players){
-           double betting = inputManager.getPlayerBetting(player);
-           System.out.println(betting);
-       }
+       setPlayersAndBetting(players);
 
+
+    }
+
+    private void setPlayersAndBetting(String[] players) {
+        for(String player : players){
+            double betting = inputManager.getPlayerBetting(player);
+            Players.addPlayer(player, betting);
+        }
     }
 }
