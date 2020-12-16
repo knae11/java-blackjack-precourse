@@ -1,5 +1,6 @@
 package domain.view;
 
+import domain.common.Answer;
 import domain.common.ErrorMessage;
 import domain.common.ErrorMessageException;
 import java.nio.file.Path;
@@ -14,6 +15,8 @@ public class InputManager {
     private static final int MIN_BETTING = 1;
     private static final String PLAYER_SPLIT_DELIMITER = ",";
     private static final String NO_EMPTY_PLAYER = "플레이어 이름에는 공백을 허용하지 않습니다.";
+    private static final String YES_OR_NO = "y, n 중에서 입력해 주세요.";
+
 
     private final Scanner scanner;
 
@@ -64,7 +67,7 @@ public class InputManager {
             String bettingInput = scanner.nextLine().trim();
             try {
                 return checkNumber(bettingInput);
-            } catch (ErrorMessageException errorMessageException){
+            } catch (ErrorMessageException errorMessageException) {
                 ErrorMessage.print(errorMessageException);
             }
         }
@@ -84,6 +87,25 @@ public class InputManager {
     private void checkOverOne(double betting) {
         if (betting < MIN_BETTING) {
             throw new ErrorMessageException(NOT_UNDER_ONE);
+        }
+    }
+
+    public String getAnswerOfMoreCard() {
+        while (true) {
+            try {
+                OutputManager.printAskingMoreCard();
+                String answer = scanner.nextLine().trim();
+                checkAnswer(answer);
+                return answer;
+            } catch (ErrorMessageException errorMessageException) {
+                ErrorMessage.print(errorMessageException);
+            }
+        }
+    }
+
+    private void checkAnswer(String answer) {
+        if (!(answer.equals(Answer.YES.getAnswer()) || answer.equals(Answer.NO.getAnswer()))) {
+            throw new ErrorMessageException(YES_OR_NO);
         }
     }
 }

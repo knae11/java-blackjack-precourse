@@ -42,7 +42,7 @@ public class Player {
             gameOver = LOSER;
         }
     }
-    private String isGameOver(){
+    public String isGameOver(){
         return gameOver;
     }
 

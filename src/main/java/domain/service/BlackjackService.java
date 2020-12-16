@@ -3,6 +3,7 @@ package domain.service;
 import domain.card.Card;
 import domain.card.CardFactory;
 import domain.card.ShuffledCard;
+import domain.common.Answer;
 import domain.user.Dealer;
 import domain.user.Player;
 import domain.user.Players;
@@ -17,35 +18,62 @@ public class BlackjackService {
     private final ShuffledCard shuffledCard;
     private final Dealer dealer;
 
-    public BlackjackService(Scanner scanner){
+    public BlackjackService(Scanner scanner) {
         inputManager = new InputManager(scanner);
         shuffledCard = new ShuffledCard();
         dealer = new Dealer();
     }
 
-    public void run(){
-       //String[] players = inputManager.getPlayersInput();
-       //setPlayersAndBetting(players);
+    public void run() {
+        String[] players = inputManager.getPlayersInput();
+        setPlayersAndBetting(players);
         initHandoutCards();
+        playNextTurn();
+        printResult();
 
 
     }
 
+    private void playNextTurn() {
+        for (Player player : Players.players()) {
+            String answer = inputManager.getAnswerOfMoreCard();
+            if(answer.equals(Answer.YES.getAnswer())){
+                player.addCard(shuffledCard.getShuffledCard());
+            }
+
+            System.out.println(player.getSumOfCards());
+            checkDie(player);
+        }
+    }
+
+    private void checkDie(Player player) {
+        if(!player.isGameOver().equals("")){
+            System.out.println(player.isGameOver());
+        }
+    }
+
+    private void printResult() {
+        System.out.println(dealer.getSumOfCards());
+        for (Player player : Players.players()) {
+            System.out.println(player.getSumOfCards());
+        }
+    }
+
     private void initHandoutCards() {
-        for(int i = 0; i<TWO ; i++){
+        for (int i = 0; i < TWO; i++) {
             dealer.addCard(shuffledCard.getShuffledCard());
             setAllPlayersCard();
         }
     }
 
     private void setAllPlayersCard() {
-        for(Player player : Players.players()){
+        for (Player player : Players.players()) {
             player.addCard(shuffledCard.getShuffledCard());
         }
     }
 
     private void setPlayersAndBetting(String[] players) {
-        for(String player : players){
+        for (String player : players) {
             double betting = inputManager.getPlayerBetting(player);
             Players.addPlayer(player, betting);
         }
