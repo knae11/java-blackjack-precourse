@@ -25,6 +25,7 @@ public class Player extends Character {
     public void addCard(Card card) {
         cards.add(card);
         sumOfCards += card.getScoreOfCard();
+        Players.setMaxScore(sumOfCards);
         checkDie();
         checkBlackJack();
     }
@@ -49,5 +50,6 @@ public class Player extends Character {
         }
         return bettingMoney;
     }
+
 
 }

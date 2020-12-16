@@ -31,19 +31,24 @@ public class BlackjackService {
         if (turnForPlayers()) {
             return;
         }
+        setCaseOfNoWinnerAndLoser();
+    }
+
+    private void setCaseOfNoWinnerAndLoser() {
+        Players.setResultWhenTie();
     }
 
 
     private boolean turnForPlayers() {
         for (Character player : Players.players()) {
             if(player.getName().equals(Dealer.NAME)){
+                player.addCard(shuffledCard.getShuffledCard());
                 continue;
             }
             String answer = inputManager.getAnswerOfMoreCard();
             if (answer.equals(Answer.YES.getAnswer())) {
                 player.addCard(shuffledCard.getShuffledCard());
             }
-            System.out.println(player.getSumOfCards());
             if (checkDie(player)) {
                 return true;
             }
@@ -60,10 +65,8 @@ public class BlackjackService {
         return false;
     }
 
-    //todo : 베팅금액 표시
     private void printResult() {
         if (Players.findIsWinner()) {
-            System.out.println("winnerCase");
             isWinnerCase();
             return;
         }

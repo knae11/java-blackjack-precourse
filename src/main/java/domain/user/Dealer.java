@@ -20,6 +20,7 @@ public class Dealer extends Character {
         if(sumOfCards < MIN_NOT_MORE_CARD){
             cards.add(card);
             sumOfCards += card.getScoreOfCard();
+            Players.setMaxScore(sumOfCards);
             checkDie();
             checkBlackJack();
         }
